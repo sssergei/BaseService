@@ -64,7 +64,7 @@ func main() {
 		fmt.Println("No releases found")
 	}
 	for _, ri := range releases {
-		fmt.Printf("%s\t%s\t%s\n", ri.GetVersion(), ri.GetReleaseDate(), ri.GetReleaseNotesURL())
+		fmt.Printf("%s\t%s\n", ri.GetVersion(), ri.GetReleaseDate())
 	}
 }
 
