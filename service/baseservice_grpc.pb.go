@@ -133,5 +133,5 @@ var GoReleaseService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "service/service.proto",
+	Metadata: "service/baseservice.proto",
 }
