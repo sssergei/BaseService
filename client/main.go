@@ -8,7 +8,7 @@ import (
 	"log"
 	"sort"
 
-	pb "github.com/pieterlouw/grpc-beyond/proto"
+	pb "github.com/sssergei/BaseService/tree/main/service"
 	context "golang.org/x/net/context"
 	grpc "google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
