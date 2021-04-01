@@ -1,15 +1,26 @@
 syntax = "proto3";
 
+option go_package = "github.com/sssergei/BaseService/tree/main/proto";
+
 package proto;
 
-service MicroService 
-    rpc SayHello(GetHelloRequest) returns (HelloResponse) {}
+service GoReleaseService {
+    rpc GetReleaseInfo(GetReleaseInfoRequest) returns (ReleaseInfo) {}
+    rpc ListReleases(ListReleasesRequest) returns (ListReleasesResponse) {}
 }
 
-message GetHelloRequest {
-    string name = 1;
+message GetReleaseInfoRequest {
+    string version = 1;
 }
+
+message ListReleasesRequest {} //empty
 
 message ListReleasesResponse {
-    string message = 1;
+    repeated ReleaseInfo releases = 1;
+}
+
+message ReleaseInfo {
+    string version = 1;
+    string release_date = 2;
+    string release_notes_url = 3;
 }
