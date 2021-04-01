@@ -1,10 +1,14 @@
 syntax = "proto3";
 
+option go_package = "github.com/sssergei/BaseService/tree/main/proto";
+
 package proto;
 
 service GoReleaseService {
     rpc GetReleaseInfo(GetReleaseInfoRequest) returns (ReleaseInfo) {}
     rpc ListReleases(ListReleasesRequest) returns (ListReleasesResponse) {}
+
+    rpc SayHello(SayHelloRequest) returns (SayHelloResponse) {}
 }
 
 message GetReleaseInfoRequest {
@@ -12,6 +16,10 @@ message GetReleaseInfoRequest {
 }
 
 message ListReleasesRequest {} //empty
+
+message SayHelloRequest {
+    string name = 1;
+}
 
 message ListReleasesResponse {
     repeated ReleaseInfo releases = 1;
@@ -21,4 +29,8 @@ message ReleaseInfo {
     string version = 1;
     string release_date = 2;
     string release_notes_url = 3;
+}
+
+message SayHelloResponse {
+    string message = 1;
 }

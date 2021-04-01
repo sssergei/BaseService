@@ -69,6 +69,12 @@ func (g *goReleaseService) ListReleases(ctx context.Context, r *pb.ListReleasesR
 		Releases: releases,
 	}, nil
 }
+func (g *goReleaseService) SayHello(ctx context.Context, r *pb.SayHelloRequest) (*pb.SayHelloResponse, error) {
+
+	return &pb.SayHelloResponse{
+		Message: "Hello " + r.GetName(),
+	}, nil
+}
 
 func main() {
 	flag.Parse()
