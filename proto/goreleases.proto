@@ -1,7 +1,5 @@
 syntax = "proto3";
 
-option go_package = "github.com/sssergei/BaseService/tree/main/proto";
-
 package proto;
 
 service GoReleaseService {
