@@ -21,7 +21,7 @@ type GoReleaseServiceClient interface {
 	GetReleaseInfo(ctx context.Context, in *GetReleaseInfoRequest, opts ...grpc.CallOption) (*ReleaseInfo, error)
 	ListReleases(ctx context.Context, in *ListReleasesRequest, opts ...grpc.CallOption) (*ListReleasesResponse, error)
 	SayHello(ctx context.Context, in *SayHelloRequest, opts ...grpc.CallOption) (*SayHelloResponse, error)
-	InsertUser(ctx context.Context, in *InsertUserRquest, opts ...grpc.CallOption) (*InsertUserResponse, error)
+	InsertUser(ctx context.Context, in *InsertUserRequest, opts ...grpc.CallOption) (*InsertUserResponse, error)
 }
 
 type goReleaseServiceClient struct {
@@ -59,7 +59,7 @@ func (c *goReleaseServiceClient) SayHello(ctx context.Context, in *SayHelloReque
 	return out, nil
 }
 
-func (c *goReleaseServiceClient) InsertUser(ctx context.Context, in *InsertUserRquest, opts ...grpc.CallOption) (*InsertUserResponse, error) {
+func (c *goReleaseServiceClient) InsertUser(ctx context.Context, in *InsertUserRequest, opts ...grpc.CallOption) (*InsertUserResponse, error) {
 	out := new(InsertUserResponse)
 	err := c.cc.Invoke(ctx, "/proto.GoReleaseService/InsertUser", in, out, opts...)
 	if err != nil {
@@ -75,7 +75,7 @@ type GoReleaseServiceServer interface {
 	GetReleaseInfo(context.Context, *GetReleaseInfoRequest) (*ReleaseInfo, error)
 	ListReleases(context.Context, *ListReleasesRequest) (*ListReleasesResponse, error)
 	SayHello(context.Context, *SayHelloRequest) (*SayHelloResponse, error)
-	InsertUser(context.Context, *InsertUserRquest) (*InsertUserResponse, error)
+	InsertUser(context.Context, *InsertUserRequest) (*InsertUserResponse, error)
 	mustEmbedUnimplementedGoReleaseServiceServer()
 }
 
@@ -92,7 +92,7 @@ func (UnimplementedGoReleaseServiceServer) ListReleases(context.Context, *ListRe
 func (UnimplementedGoReleaseServiceServer) SayHello(context.Context, *SayHelloRequest) (*SayHelloResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SayHello not implemented")
 }
-func (UnimplementedGoReleaseServiceServer) InsertUser(context.Context, *InsertUserRquest) (*InsertUserResponse, error) {
+func (UnimplementedGoReleaseServiceServer) InsertUser(context.Context, *InsertUserRequest) (*InsertUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InsertUser not implemented")
 }
 func (UnimplementedGoReleaseServiceServer) mustEmbedUnimplementedGoReleaseServiceServer() {}
@@ -163,7 +163,7 @@ func _GoReleaseService_SayHello_Handler(srv interface{}, ctx context.Context, de
 }
 
 func _GoReleaseService_InsertUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(InsertUserRquest)
+	in := new(InsertUserRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -175,7 +175,7 @@ func _GoReleaseService_InsertUser_Handler(srv interface{}, ctx context.Context, 
 		FullMethod: "/proto.GoReleaseService/InsertUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GoReleaseServiceServer).InsertUser(ctx, req.(*InsertUserRquest))
+		return srv.(GoReleaseServiceServer).InsertUser(ctx, req.(*InsertUserRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

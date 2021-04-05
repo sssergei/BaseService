@@ -10,7 +10,7 @@ service GoReleaseService {
 
     rpc SayHello(SayHelloRequest) returns (SayHelloResponse) {}
 
-    rpc InsertUser(InsertUserRquest) returns (InsertUserResponse) {}
+    rpc InsertUser(InsertUserRequest) returns (InsertUserResponse) {}
 }
 
 message GetReleaseInfoRequest {
@@ -37,10 +37,11 @@ message SayHelloResponse {
     string message = 1;
 }
 
-message InsertUserRquest {
-    string name = 1;
-    string surname = 2;
-    string othername = 3;
+message InsertUserRequest {
+    string id = 1;
+    string name = 2;
+    string surname = 3;
+    string othername = 4;
 }
 
 message InsertUserResponse{
