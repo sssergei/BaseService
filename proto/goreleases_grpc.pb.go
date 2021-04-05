@@ -76,7 +76,7 @@ type GoReleaseServiceServer interface {
 	ListReleases(context.Context, *ListReleasesRequest) (*ListReleasesResponse, error)
 	SayHello(context.Context, *SayHelloRequest) (*SayHelloResponse, error)
 	InsertUser(context.Context, *InsertUserRequest) (*InsertUserResponse, error)
-	mustEmbedUnimplementedGoReleaseServiceServer()
+	//mustEmbedUnimplementedGoReleaseServiceServer()
 }
 
 // UnimplementedGoReleaseServiceServer must be embedded to have forward compatible implementations.
@@ -95,14 +95,15 @@ func (UnimplementedGoReleaseServiceServer) SayHello(context.Context, *SayHelloRe
 func (UnimplementedGoReleaseServiceServer) InsertUser(context.Context, *InsertUserRequest) (*InsertUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InsertUser not implemented")
 }
-func (UnimplementedGoReleaseServiceServer) mustEmbedUnimplementedGoReleaseServiceServer() {}
+
+//func (UnimplementedGoReleaseServiceServer) mustEmbedUnimplementedGoReleaseServiceServer() {}
 
 // UnsafeGoReleaseServiceServer may be embedded to opt out of forward compatibility for this service.
 // Use of this interface is not recommended, as added methods to GoReleaseServiceServer will
 // result in compilation errors.
-type UnsafeGoReleaseServiceServer interface {
-	mustEmbedUnimplementedGoReleaseServiceServer()
-}
+//type UnsafeGoReleaseServiceServer interface {
+//	mustEmbedUnimplementedGoReleaseServiceServer()
+//}
 
 func RegisterGoReleaseServiceServer(s grpc.ServiceRegistrar, srv GoReleaseServiceServer) {
 	s.RegisterService(&GoReleaseService_ServiceDesc, srv)

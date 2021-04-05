@@ -7,23 +7,37 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func InsertUser(id int, name string, surname string, othername string) {
+func InsertUser(id string, name string, surname string, othername string) (int64, error) {
 	fmt.Println("Go MySQL database")
-	db, err := sql.Open("mysql", "root:QWEfghIOP0!@tcp(127.0.0.1:3306)/mydb")
+	db, err := sql.Open("mysql", "root:QWEfghUIO0!@tcp(127.0.0.1:3306)/mydb")
 
 	if err != nil {
 		panic(err.Error())
 	}
 
 	defer db.Close()
-	insert, err := db.Query("INSERT INTO users VALUES ( 1, 'TEST' , 'Test1','Test2' )")
+
+	stmt, err := db.Prepare("INSERT INTO users VALUES(?,?,?,?)")
 
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Println("Go MySQL database %d ", insert.Scan("id"))
-	defer insert.Close()
+
+	res, err := stmt.Exec(id, name, surname, othername)
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	lastId, err := res.RowsAffected()
+
+	if err != nil {
+		panic(err.Error())
+	}
+	return lastId, nil
 }
+
+/*
 func main() {
 	fmt.Println("Go MySQL Tutorial")
 
@@ -52,3 +66,4 @@ func main() {
 	defer insert.Close()
 
 }
+*/

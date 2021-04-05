@@ -9,8 +9,10 @@ import (
 	"io/ioutil"
 	"log"
 	"net"
+	"strconv"
 	"time"
 
+	pb1 "github.com/sssergei/BaseService/db"
 	pb "github.com/sssergei/BaseService/proto"
 	context "golang.org/x/net/context"
 	grpc "google.golang.org/grpc"
@@ -70,17 +72,20 @@ func (g *goReleaseService) ListReleases(ctx context.Context, r *pb.ListReleasesR
 	}, nil
 }
 func (g *goReleaseService) SayHello(ctx context.Context, r *pb.SayHelloRequest) (*pb.SayHelloResponse, error) {
-
 	return &pb.SayHelloResponse{
 		Message: "Hello " + r.GetName(),
 	}, nil
 }
 
 func (g *goReleaseService) InsertUser(ctx context.Context, r *pb.InsertUserRequest) (*pb.InsertUserResponse, error) {
-	mydb := &pb.InsertUser(r.GetId(), r.GetName(), r.GerSurname(), r.GetOthername())
 
+	lastid, err := pb1.InsertUser(r.GetId(), r.GetName(), r.GetSurname(), r.GetOthername())
+
+	if err != nil {
+		return nil, status.Errorf(codes.NotFound, "release verions %s not found", r.GetId())
+	}
 	return &pb.InsertUserResponse{
-		Id: r.GetId() + mydb,
+		Id: strconv.FormatInt(lastid, 10),
 	}, nil
 }
 
