@@ -18,8 +18,6 @@ import (
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
-
-	pb1 "github.com/sssergei/BaseService/db"
 )
 
 var listenPort = flag.String("l", ":7100", "Specify the port that the server will listen on")
@@ -79,7 +77,7 @@ func (g *goReleaseService) SayHello(ctx context.Context, r *pb.SayHelloRequest) 
 }
 
 func (g *goReleaseService) InsertUser(ctx context.Context, r *pb.InsertUserRequest) (*pb.InsertUserResponse, error) {
-	mydb := &pb1.InsertUser(r.GetId(), r.GetName(), r, GerSurname(), r.GetOthername())
+	mydb := &pb1.InsertUser(r.GetId(), r.GetName(), r.GerSurname(), r.GetOthername())
 
 	return &pb.InsertUserResponse{
 		Id: r.GetId() + mydb,
