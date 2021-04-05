@@ -9,6 +9,8 @@ service GoReleaseService {
     rpc ListReleases(ListReleasesRequest) returns (ListReleasesResponse) {}
 
     rpc SayHello(SayHelloRequest) returns (SayHelloResponse) {}
+
+    rpc InsertUser(InsertUserRquest) returns (InsertUserResponse) {}
 }
 
 message GetReleaseInfoRequest {
@@ -33,4 +35,14 @@ message ReleaseInfo {
 
 message SayHelloResponse {
     string message = 1;
+}
+
+message InsertUserRquest {
+    string name = 1;
+    string surname = 2;
+    string othername = 3;
+}
+
+message InsertUserResponse{
+    string id = 1;
 }

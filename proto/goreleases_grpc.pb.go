@@ -21,6 +21,7 @@ type GoReleaseServiceClient interface {
 	GetReleaseInfo(ctx context.Context, in *GetReleaseInfoRequest, opts ...grpc.CallOption) (*ReleaseInfo, error)
 	ListReleases(ctx context.Context, in *ListReleasesRequest, opts ...grpc.CallOption) (*ListReleasesResponse, error)
 	SayHello(ctx context.Context, in *SayHelloRequest, opts ...grpc.CallOption) (*SayHelloResponse, error)
+	InsertUser(ctx context.Context, in *InsertUserRquest, opts ...grpc.CallOption) (*InsertUserResponse, error)
 }
 
 type goReleaseServiceClient struct {
@@ -58,6 +59,15 @@ func (c *goReleaseServiceClient) SayHello(ctx context.Context, in *SayHelloReque
 	return out, nil
 }
 
+func (c *goReleaseServiceClient) InsertUser(ctx context.Context, in *InsertUserRquest, opts ...grpc.CallOption) (*InsertUserResponse, error) {
+	out := new(InsertUserResponse)
+	err := c.cc.Invoke(ctx, "/proto.GoReleaseService/InsertUser", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // GoReleaseServiceServer is the server API for GoReleaseService service.
 // All implementations must embed UnimplementedGoReleaseServiceServer
 // for forward compatibility
@@ -65,7 +75,8 @@ type GoReleaseServiceServer interface {
 	GetReleaseInfo(context.Context, *GetReleaseInfoRequest) (*ReleaseInfo, error)
 	ListReleases(context.Context, *ListReleasesRequest) (*ListReleasesResponse, error)
 	SayHello(context.Context, *SayHelloRequest) (*SayHelloResponse, error)
-	//mustEmbedUnimplementedGoReleaseServiceServer()
+	InsertUser(context.Context, *InsertUserRquest) (*InsertUserResponse, error)
+	mustEmbedUnimplementedGoReleaseServiceServer()
 }
 
 // UnimplementedGoReleaseServiceServer must be embedded to have forward compatible implementations.
@@ -81,15 +92,17 @@ func (UnimplementedGoReleaseServiceServer) ListReleases(context.Context, *ListRe
 func (UnimplementedGoReleaseServiceServer) SayHello(context.Context, *SayHelloRequest) (*SayHelloResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SayHello not implemented")
 }
-
-//func (UnimplementedGoReleaseServiceServer) mustEmbedUnimplementedGoReleaseServiceServer() {}
+func (UnimplementedGoReleaseServiceServer) InsertUser(context.Context, *InsertUserRquest) (*InsertUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InsertUser not implemented")
+}
+func (UnimplementedGoReleaseServiceServer) mustEmbedUnimplementedGoReleaseServiceServer() {}
 
 // UnsafeGoReleaseServiceServer may be embedded to opt out of forward compatibility for this service.
 // Use of this interface is not recommended, as added methods to GoReleaseServiceServer will
 // result in compilation errors.
-//type UnsafeGoReleaseServiceServer interface {
-//	mustEmbedUnimplementedGoReleaseServiceServer()
-//}
+type UnsafeGoReleaseServiceServer interface {
+	mustEmbedUnimplementedGoReleaseServiceServer()
+}
 
 func RegisterGoReleaseServiceServer(s grpc.ServiceRegistrar, srv GoReleaseServiceServer) {
 	s.RegisterService(&GoReleaseService_ServiceDesc, srv)
@@ -149,6 +162,24 @@ func _GoReleaseService_SayHello_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _GoReleaseService_InsertUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InsertUserRquest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GoReleaseServiceServer).InsertUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/proto.GoReleaseService/InsertUser",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GoReleaseServiceServer).InsertUser(ctx, req.(*InsertUserRquest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // GoReleaseService_ServiceDesc is the grpc.ServiceDesc for GoReleaseService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -167,6 +198,10 @@ var GoReleaseService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SayHello",
 			Handler:    _GoReleaseService_SayHello_Handler,
+		},
+		{
+			MethodName: "InsertUser",
+			Handler:    _GoReleaseService_InsertUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

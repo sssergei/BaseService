@@ -76,6 +76,13 @@ func (g *goReleaseService) SayHello(ctx context.Context, r *pb.SayHelloRequest) 
 	}, nil
 }
 
+func (g *goReleaseService) InsertUser(ctx context.Context, r *pb.InsertUserRequest) (*pb.InsertUserResponse, error) {
+
+	return &pb.InsertUserResponse{
+		Id: r.GetId(),
+	}, nil
+}
+
 func main() {
 	flag.Parse()
 	svc := &goReleaseService{
