@@ -67,16 +67,30 @@ func main() {
 		//fmt.Printf("%s\t%s\t%s\n", ri.GetVersion(), ri.GetReleaseDate(), ri.GetReleaseNotesURL())
 		fmt.Printf("%s\t%s\n", ri.GetVersion(), ri.GetReleaseDate())
 	}
+
 	rsp1, err := client.GetReleaseInfo(ctx, &pb.GetReleaseInfoRequest{Version: "1.5"})
+	if err != nil {
+		log.Fatalf("ReleaseInfo err: %v", err.Error())
+	}
 	fmt.Println("%s\t%s\n", rsp1.GetVersion(), rsp1.GetReleaseDate())
 
 	rsp2, err := client.SayHello(ctx, &pb.SayHelloRequest{Name: "Jonh"})
+	if err != nil {
+		log.Fatalf("SayHello err: %v", err.Error())
+	}
+
 	fmt.Println("%s\n", rsp2.GetMessage())
 
 	rsp3, err := client.InsertUser(ctx, &pb.InsertUserRequest{Id: "7", Name: "Jonh7", Surname: "surn name7", Othername: "Other name7"})
+	if err != nil {
+		log.Fatalf("InsertUser err: %v", err)
+	}
 	fmt.Println("%s\n", rsp3.GetId())
 
 	rsp4, err := client.DeleteUser(ctx, &pb.DeleteUserRequest{Id: "6"})
+	if err != nil {
+		log.Fatalf("ListReleases err: %v", err)
+	}
 	fmt.Println("%s\n", rsp4.GetId())
 }
 
