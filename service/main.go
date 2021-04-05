@@ -77,7 +77,7 @@ func (g *goReleaseService) SayHello(ctx context.Context, r *pb.SayHelloRequest) 
 }
 
 func (g *goReleaseService) InsertUser(ctx context.Context, r *pb.InsertUserRequest) (*pb.InsertUserResponse, error) {
-	mydb := &pb1.InsertUser(r.GetId(), r.GetName(), r.GerSurname(), r.GetOthername())
+	mydb := &pb.InsertUser(r.GetId(), r.GetName(), r.GerSurname(), r.GetOthername())
 
 	return &pb.InsertUserResponse{
 		Id: r.GetId() + mydb,
