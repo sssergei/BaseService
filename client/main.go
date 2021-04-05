@@ -81,13 +81,13 @@ func main() {
 
 	fmt.Println("%s\n", rsp2.GetMessage())
 
-	rsp3, err := client.InsertUser(ctx, &pb.InsertUserRequest{Id: "7", Name: "Jonh7", Surname: "surn name7", Othername: "Other name7"})
+	rsp3, err := client.InsertUser(ctx, &pb.InsertUserRequest{Id: "9", Name: "Jonh7", Surname: "surn name7", Othername: "Other name7"})
 	if err != nil {
 		log.Fatalf("InsertUser err: %v", err)
 	}
 	fmt.Println("%s\n", rsp3.GetId())
 
-	rsp4, err := client.DeleteUser(ctx, &pb.DeleteUserRequest{Id: "6"})
+	rsp4, err := client.DeleteUser(ctx, &pb.DeleteUserRequest{Id: "7"})
 	if err != nil {
 		log.Fatalf("ListReleases err: %v", err)
 	}

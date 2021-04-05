@@ -160,6 +160,19 @@ func unaryInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServ
 		}
 	}
 
+	// code from the authorize() function:
+	md, ok := metadata.FromIncomingContext(ctx)
+	if !ok {
+		return nil, status.Errorf(codes.InvalidArgument, "retrieving metadata failed")
+	}
+
+	elem, ok := md["authorization"]
+	if !ok {
+		return nil, status.Errorf(codes.InvalidArgument, "no auth details supplied")
+	}
+
+	log.Printf("request - Method:%s\tDuration:%s\tELEM:%v\n", info.FullMethod, time.Since(start), elem) //logging
+
 	h, err := handler(ctx, req)
 
 	log.Printf("request - Method:%s\tDuration:%s\tError:%v\n", info.FullMethod, time.Since(start), err) //logging
