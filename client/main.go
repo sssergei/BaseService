@@ -73,9 +73,11 @@ func main() {
 	rsp2, err := client.SayHello(ctx, &pb.SayHelloRequest{Name: "Jonh"})
 	fmt.Println("%s\n", rsp2.GetMessage())
 
-	rsp3, err := client.InsertUser(ctx, &pb.InsertUserRequest{Id: "6", Name: "Jonh5", Surname: "surn name5", Othername: "Other name5"})
+	rsp3, err := client.InsertUser(ctx, &pb.InsertUserRequest{Id: "7", Name: "Jonh7", Surname: "surn name7", Othername: "Other name7"})
 	fmt.Println("%s\n", rsp3.GetId())
 
+	rsp4, err := client.DeleteUser(ctx, &pb.DeleteUserRequest{Id: "6"})
+	fmt.Println("%s\n", rsp4.GetId())
 }
 
 // basicAuthCreds is an implementation of credentials.PerRPCCredentials

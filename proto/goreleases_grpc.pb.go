@@ -22,6 +22,7 @@ type GoReleaseServiceClient interface {
 	ListReleases(ctx context.Context, in *ListReleasesRequest, opts ...grpc.CallOption) (*ListReleasesResponse, error)
 	SayHello(ctx context.Context, in *SayHelloRequest, opts ...grpc.CallOption) (*SayHelloResponse, error)
 	InsertUser(ctx context.Context, in *InsertUserRequest, opts ...grpc.CallOption) (*InsertUserResponse, error)
+	DeleteUser(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*DeleteUserResponse, error)
 }
 
 type goReleaseServiceClient struct {
@@ -68,6 +69,15 @@ func (c *goReleaseServiceClient) InsertUser(ctx context.Context, in *InsertUserR
 	return out, nil
 }
 
+func (c *goReleaseServiceClient) DeleteUser(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*DeleteUserResponse, error) {
+	out := new(DeleteUserResponse)
+	err := c.cc.Invoke(ctx, "/proto.GoReleaseService/DeleteUser", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // GoReleaseServiceServer is the server API for GoReleaseService service.
 // All implementations must embed UnimplementedGoReleaseServiceServer
 // for forward compatibility
@@ -76,6 +86,7 @@ type GoReleaseServiceServer interface {
 	ListReleases(context.Context, *ListReleasesRequest) (*ListReleasesResponse, error)
 	SayHello(context.Context, *SayHelloRequest) (*SayHelloResponse, error)
 	InsertUser(context.Context, *InsertUserRequest) (*InsertUserResponse, error)
+	DeleteUser(context.Context, *DeleteUserRequest) (*DeleteUserResponse, error)
 	//mustEmbedUnimplementedGoReleaseServiceServer()
 }
 
@@ -94,6 +105,9 @@ func (UnimplementedGoReleaseServiceServer) SayHello(context.Context, *SayHelloRe
 }
 func (UnimplementedGoReleaseServiceServer) InsertUser(context.Context, *InsertUserRequest) (*InsertUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InsertUser not implemented")
+}
+func (UnimplementedGoReleaseServiceServer) DeleteUser(context.Context, *DeleteUserRequest) (*DeleteUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteUser not implemented")
 }
 
 //func (UnimplementedGoReleaseServiceServer) mustEmbedUnimplementedGoReleaseServiceServer() {}
@@ -181,6 +195,24 @@ func _GoReleaseService_InsertUser_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _GoReleaseService_DeleteUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GoReleaseServiceServer).DeleteUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/proto.GoReleaseService/DeleteUser",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GoReleaseServiceServer).DeleteUser(ctx, req.(*DeleteUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // GoReleaseService_ServiceDesc is the grpc.ServiceDesc for GoReleaseService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -203,6 +235,10 @@ var GoReleaseService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InsertUser",
 			Handler:    _GoReleaseService_InsertUser_Handler,
+		},
+		{
+			MethodName: "DeleteUser",
+			Handler:    _GoReleaseService_DeleteUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

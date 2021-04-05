@@ -37,6 +37,36 @@ func InsertUser(id string, name string, surname string, othername string) (int64
 	return lastId, nil
 }
 
+func DeleteUser(id string) (int64, error) {
+	fmt.Println("Go MySQL database")
+	db, err := sql.Open("mysql", "root:QWEfghUIO0!@tcp(127.0.0.1:3306)/mydb")
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	defer db.Close()
+
+	stmt, err := db.Prepare("DELETE FROM users WHERE id = ?")
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	res, err := stmt.Exec(id)
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	lastId, err := res.RowsAffected()
+
+	if err != nil {
+		panic(err.Error())
+	}
+	return lastId, nil
+}
+
 /*
 func main() {
 	fmt.Println("Go MySQL Tutorial")

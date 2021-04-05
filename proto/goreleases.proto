@@ -11,6 +11,7 @@ service GoReleaseService {
     rpc SayHello(SayHelloRequest) returns (SayHelloResponse) {}
 
     rpc InsertUser(InsertUserRequest) returns (InsertUserResponse) {}
+    rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse) {}
 }
 
 message GetReleaseInfoRequest {
@@ -45,5 +46,13 @@ message InsertUserRequest {
 }
 
 message InsertUserResponse{
+    string id = 1;
+}
+
+message DeleteUserRequest {
+    string id = 1;
+}
+
+message DeleteUserResponse{
     string id = 1;
 }

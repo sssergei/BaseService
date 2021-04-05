@@ -89,6 +89,18 @@ func (g *goReleaseService) InsertUser(ctx context.Context, r *pb.InsertUserReque
 	}, nil
 }
 
+func (g *goReleaseService) DeleteUser(ctx context.Context, r *pb.DeleteUserRequest) (*pb.DeleteUserResponse, error) {
+
+	lastid, err := pb1.DeleteUser(r.GetId())
+
+	if err != nil {
+		return nil, status.Errorf(codes.NotFound, "release verions %s not found", r.GetId())
+	}
+	return &pb.DeleteUserResponse{
+		Id: strconv.FormatInt(lastid, 10),
+	}, nil
+}
+
 func main() {
 	flag.Parse()
 	svc := &goReleaseService{
