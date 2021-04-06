@@ -86,7 +86,7 @@ func main() {
 
 	fmt.Println("%s\n", rsp2.GetMessage())
 
-	rsp3, err := client.InsertUser(ctx, &pb.InsertUserRequest{Id: "10", Name: "Jonh10", Surname: "surn name10", Othername: "Other name10"})
+	rsp3, err := client.InsertUser(ctx, &pb.InsertUserRequest{Id: "11", Name: "Jonh11", Surname: "surn name10", Othername: "Other name10"})
 	if err != nil {
 		log.Fatalf("InsertUser err: %v", err)
 	}
