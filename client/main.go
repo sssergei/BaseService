@@ -33,6 +33,11 @@ func main() {
 		InsecureSkipVerify: true, // using self signed certificate for demo, for more secure connections see https://bbengfort.github.io/programmer/2017/03/03/secure-grpc.html
 	})
 
+	//creds, err := credentials.NewClientTLSFromFile("../certs/server.crt", "")
+	//if err != nil {
+	//	log.Fatalln("failed to create cert", err)
+	//}
+
 	grpcAuth := &basicAuthCreds{
 		username: *username,
 		password: *password,
@@ -81,13 +86,13 @@ func main() {
 
 	fmt.Println("%s\n", rsp2.GetMessage())
 
-	rsp3, err := client.InsertUser(ctx, &pb.InsertUserRequest{Id: "9", Name: "Jonh7", Surname: "surn name7", Othername: "Other name7"})
+	rsp3, err := client.InsertUser(ctx, &pb.InsertUserRequest{Id: "10", Name: "Jonh10", Surname: "surn name10", Othername: "Other name10"})
 	if err != nil {
 		log.Fatalf("InsertUser err: %v", err)
 	}
 	fmt.Println("%s\n", rsp3.GetId())
 
-	rsp4, err := client.DeleteUser(ctx, &pb.DeleteUserRequest{Id: "7"})
+	rsp4, err := client.DeleteUser(ctx, &pb.DeleteUserRequest{Id: "3"})
 	if err != nil {
 		log.Fatalf("ListReleases err: %v", err)
 	}
