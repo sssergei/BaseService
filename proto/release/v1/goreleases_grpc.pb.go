@@ -87,7 +87,7 @@ type GoReleaseServiceServer interface {
 	SayHello(context.Context, *SayHelloRequest) (*SayHelloResponse, error)
 	InsertUser(context.Context, *InsertUserRequest) (*InsertUserResponse, error)
 	DeleteUser(context.Context, *DeleteUserRequest) (*DeleteUserResponse, error)
-	//mustEmbedUnimplementedGoReleaseServiceServer()
+	mustEmbedUnimplementedGoReleaseServiceServer()
 }
 
 // UnimplementedGoReleaseServiceServer must be embedded to have forward compatible implementations.
@@ -241,5 +241,5 @@ var GoReleaseService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "proto/goreleases.proto",
+	Metadata: "proto/release/v1/goreleases.proto",
 }
