@@ -9,7 +9,9 @@ import (
 	"io/ioutil"
 	"log"
 	"net"
+	"net/http"
 	"strconv"
+	"strings"
 	"time"
 
 	pb1 "github.com/sssergei/BaseService/db"
@@ -148,6 +150,16 @@ func main() {
 	if err := server.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}
+}
+
+func httpGrpcRouter(grpcServer *grpc.Server, httpHandler http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.ProtoMajor == 2 && strings.Contains(r.Header.Get("Content-Type"), "application/grpc") {
+			grpcServer.ServeHTTP(w, r)
+		} else {
+			httpHandler.ServeHTTP(w, r)
+		}
+	})
 }
 
 // general unary interceptor function
